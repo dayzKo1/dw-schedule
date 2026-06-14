@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下周行程 · 6/15 – 6/19</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --panel: #ffffff;
+      --line: #e9e3d6;
+      --line-soft: #f0ebdf;
+      --text: #1f2533;
+      --text-2: #3a4256;
+      --muted: #7c7a72;
+      --ink: #14171e;
+      --primary: #2f6f5e;
+      --accent: #c97b3f;
+      --warn: #b06367;
+      --hollow: #d9d2c2;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: 'Outfit', -apple-system, 'PingFang SC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(47,111,94,.05) 0%, transparent 45%),
+        radial-gradient(at 100% 0%, rgba(201,123,63,.05) 0%, transparent 45%);
+      background-attachment: fixed;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 48px 24px 80px; }
+    * { text-wrap: pretty; }
+
+    header.hero {
+      padding: 40px 44px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #f9f6ee, #efece6);
+      border: 1px solid var(--line);
+      margin-bottom: 44px;
+      box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 6px 24px -16px rgba(20,23,30,.12);
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .hero-meta .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 4px rgba(47,111,94,.12);
+    }
+    header.hero h1 {
+      font-family: 'DM Serif Display', 'Source Han Serif SC', Georgia, serif;
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+    header.hero p {
+      color: var(--text-2);
+      max-width: 760px;
+      margin: 0;
+      font-size: 15px;
+    }
+    .pending-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 28px 0 0;
+    }
+    .stat {
+      padding: 14px 16px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .stat .v {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat .l {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin: 48px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2 .sec-num {
+      width: 32px; height: 32px; border-radius: 8px;
+      font-size: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), #1f4e42);
+      color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    .day-col {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 14px;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 14px -10px rgba(20,23,30,.06);
+    }
+    .day-col.today {
+      border-color: var(--primary);
+      box-shadow: 0 4px 14px -8px rgba(47,111,94,.18);
+    }
+    .day-col.highlight {
+      background: linear-gradient(180deg, #fbf8f0 0%, #ffffff 60%);
+    }
+    .day-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--line);
+    }
+    .day-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px;
+      color: var(--ink);
+    }
+    .day-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .day-col.today .day-date { color: var(--primary); font-weight: 600; }
+
+    .slot {
+      padding: 10px 12px;
+      border-radius: 9px;
+      background: var(--bg);
+      border: 1px solid var(--line-soft);
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .slot.empty {
+      background: transparent;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      font-style: italic;
+    }
+    .slot.busy {
+      background: linear-gradient(135deg, rgba(47,111,94,.10), rgba(47,111,94,.04));
+      border: 1px solid rgba(47,111,94,.25);
+      color: var(--ink);
+    }
+    .slot.busy .slot-time {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .slot.busy.afternoon {
+      background: linear-gradient(135deg, rgba(201,123,63,.12), rgba(201,123,63,.04));
+      border: 1px solid rgba(201,123,63,.28);
+    }
+    .slot.busy.afternoon .slot-time {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .slot.busy.morning {
+      background: linear-gradient(135deg, rgba(176,99,103,.10), rgba(176,99,103,.03));
+      border: 1px solid rgba(176,99,103,.24);
+    }
+    .slot.busy.morning .slot-time {
+      color: var(--warn);
+      font-weight: 600;
+    }
+    .slot.allday {
+      background: linear-gradient(135deg, rgba(47,111,94,.14), rgba(47,111,94,.05));
+      border: 1.5px solid rgba(47,111,94,.35);
+      color: var(--ink);
+    }
+    .slot.allday .slot-time {
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .slot-title {
+      font-weight: 600;
+      margin: 2px 0;
+      font-size: 13px;
+    }
+    .slot-sub {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 8px 0 0 6px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--accent), var(--warn));
+      border-radius: 2px;
+    }
+    .step {
+      position: relative;
+      padding: 0 0 22px 56px;
+    }
+    .step:last-child { padding-bottom: 4px; }
+    .step-icon {
+      position: absolute;
+      left: 4px;
+      top: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Outfit', sans-serif;
+    }
+    .step.step-2 .step-icon { border-color: var(--accent); color: var(--accent); }
+    .step.step-3 .step-icon { border-color: var(--warn); color: var(--warn); }
+    .step-content {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .step-content .when {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .step-content .what {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .step-content .where {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+    .step-content .tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(47,111,94,.10);
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .tip {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 13.5px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .tip strong { color: var(--ink); }
+
+    @media (max-width: 880px) {
+      .week-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      header.hero h1 { font-size: 28px; }
+      .pending-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .week-grid { grid-template-columns: 1fr; }
+      .wrap { padding: 32px 16px 60px; }
+      header.hero { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-meta">
+      <span><span class="dot"></span>&nbsp; 行程已记录</span>
+      <span>2026-06-14 · 周日 · 19:24</span>
+      <span>本周（6/15 – 6/19）</span>
+    </div>
+    <h1>五家都是线下，节奏排得挺密</h1>
+    <p>下周一整天在宁德洲际，下周二下午去福州赛威运动，下周三早上还有福建普创——三场都是对需求、写 agents 和 skills。此外还有香橼橙黄、众前友美两家已对完需求，等你安排回访实施时间。空档尽量留给整理和准备。</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="v">3</div>
+        <div class="l">本周已排客户</div>
+      </div>
+      <div class="stat">
+        <div class="v">2</div>
+        <div class="l">待排回访</div>
+      </div>
+      <div class="stat">
+        <div class="v">2.5<span style="font-size:14px;color:var(--muted);"> 天</span></div>
+        <div class="l">占用时段</div>
+      </div>
+      <div class="stat">
+        <div class="v">100%</div>
+        <div class="l">线下拜访</div>
+      </div>
+    </div>
+  </header>
+
+  <h2><span class="sec-num">01</span>这周日历全景</h2>
+  <div class="week-grid">
+
+    <!-- 周日 6/14（今天） -->
+    <div class="day-col today">
+      <div class="day-head">
+        <span class="day-name">周日</span>
+        <span class="day-date">06/14</span>
+      </div>
+      <div class="slot">今天 · 整理三家客户资料</div>
+      <div class="slot">晚间 · 准备周一宁德材料</div>
+      <div class="slot empty">无客户拜访</div>
+    </div>
+
+    <!-- 周一 6/15 -->
+    <div class="day-col highlight">
+      <div class="day-head">
+        <span class="day-name">周一</span>
+        <span class="day-date">06/15</span>
+      </div>
+      <div class="slot allday">
+        <div class="slot-time">ALL DAY</div>
+        <div class="slot-title">宁德洲际贸易</div>
+        <div class="slot-sub">线下 · 对需求 · 写 agents + skills</div>
+      </div>
+      <div class="slot empty">整天占用</div>
+    </div>
+
+    <!-- 周二 6/16 -->
+    <div class="day-col highlight">
+      <div class="day-head">
+        <span class="day-name">周二</span>
+        <span class="day-date">06/16</span>
+      </div>
+      <div class="slot empty">上午 · 自由安排</div>
+      <div class="slot busy afternoon">
+        <div class="slot-time">下午</div>
+        <div class="slot-title">福州赛威运动</div>
+        <div class="slot-sub">线下 · 对需求 · 写 agents + skills</div>
+      </div>
+      <div class="slot empty">晚间 · 整理材料</div>
+    </div>
+
+    <!-- 周三 6/17 -->
+    <div class="day-col highlight">
+      <div class="day-head">
+        <span class="day-name">周三</span>
+        <span class="day-date">06/17</span>
+      </div>
+      <div class="slot busy morning">
+        <div class="slot-time">早上</div>
+        <div class="slot-title">福建普创信息科技</div>
+        <div class="slot-sub">线下 · 对需求 · 写 agents + skills</div>
+      </div>
+      <div class="slot">下午 · 缓冲 / 整理</div>
+      <div class="slot empty">晚间 · 自由</div>
+    </div>
+
+    <!-- 周四 6/18 -->
+    <div class="day-col">
+      <div class="day-head">
+        <span class="day-name">周四</span>
+        <span class="day-date">06/18</span>
+      </div>
+      <div class="slot">全天 · 整理三家交付</div>
+      <div class="slot empty">暂未安排</div>
+      <div class="slot empty">暂未安排</div>
+    </div>
+
+  </div>
+
+  <h2><span class="sec-num">02</span>待排：两家已对需求</h2>
+  <div class="pending-grid" style="margin-bottom: 12px;">
+    <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; box-shadow: 0 4px 14px -10px rgba(20,23,30,.06);">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;">
+        <div style="font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink);">福州香橼橙黄商贸</div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); background: rgba(201,123,63,.12); padding: 2px 8px; border-radius: 999px;">待排</span>
+      </div>
+      <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 4px;">状态：已对过需求</div>
+      <div style="font-size: 12.5px; color: var(--muted);">下一步：线下回访实施（时间未定）</div>
+    </div>
+    <div style="background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; box-shadow: 0 4px 14px -10px rgba(20,23,30,.06);">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;">
+        <div style="font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--ink);">福州众前友美贸易</div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); background: rgba(201,123,63,.12); padding: 2px 8px; border-radius: 999px;">待排</span>
+      </div>
+      <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 4px;">状态：已对过需求</div>
+      <div style="font-size: 12.5px; color: var(--muted);">下一步：线下回访实施（时间未定）</div>
+    </div>
+  </div>
+
+  <h2><span class="sec-num">03</span>三场会 · 时间线</h2>
+  <div class="timeline">
+    <div class="step step-1">
+      <div class="step-icon">1</div>
+      <div class="step-content">
+        <div class="when">MON 06/15 · 整天</div>
+        <div class="what">宁德洲际贸易有限公司</div>
+        <div class="where">宁德 · 客户现场</div>
+        <span class="tag">agents + skills · 对需求</span>
+      </div>
+    </div>
+    <div class="step step-2">
+      <div class="step-icon">2</div>
+      <div class="step-content">
+        <div class="when">TUE 06/16 · 下午</div>
+        <div class="what">福州赛威运动科技有限公司</div>
+        <div class="where">福州 · 客户现场</div>
+        <span class="tag">agents + skills · 对需求</span>
+      </div>
+    </div>
+    <div class="step step-3">
+      <div class="step-icon">3</div>
+      <div class="step-content">
+        <div class="when">WED 06/17 · 早上</div>
+        <div class="what">福建普创信息科技</div>
+        <div class="where">福州 · 客户现场</div>
+        <span class="tag">agents + skills · 对需求</span>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="sec-num">04</span>我的几个观察</h2>
+  <div class="tip">
+    <strong>周二上午是金矿。</strong>赛威在下午，上午可以拿来做赛威的预热材料，或者给宁德洲际整场出东西。周三早上普创结束后，下午整段空出来——三家交付的整合窗口。
+  </div>
+  <div class="tip" style="margin-top: 12px;">
+    <strong>五家都是线下，意味着交通时间也要算进去。</strong>宁德在宁德市区，福州三家在福州——下周一去宁德要预留车程，回福州后周二才能衔接赛威。香橼橙黄和众前友美等排好后，建议别和这几家背靠背，留点通勤余量。
+  </div>
+  <div class="tip" style="margin-top: 12px;">
+    <strong>周四 6/18 没排东西——</strong>建议把这一天留作"交付日"，把前三天收来的需求统一出 agents 和 skills 草稿。
+  </div>
+
+</div>
+</body>
+</html>
