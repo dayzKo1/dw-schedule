@@ -131,7 +131,7 @@
     /* ===== 01 周历全景（紧凑型） ===== */
     .week-grid {
       display: grid;
-      grid-template-columns: 60px repeat(5, 1fr);
+      grid-template-columns: 56px repeat(5, 1fr);
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -158,11 +158,19 @@
       box-sizing: border-box;
     }
     .day-cell {
-      height: 28px;
+      height: 36px;
       border-bottom: 1px solid var(--line-soft);
       position: relative;
     }
     .day-cell:last-child { border-bottom: none; }
+    .day-cell.lunch { height: 22px; background: rgba(247,245,240,.4); border-bottom: 1px solid var(--line); }
+    .lunch-label {
+      font-size: 9.5px;
+      color: var(--muted);
+      text-align: center;
+      padding-top: 4px;
+      font-style: italic;
+    }
     .day-head-c {
       padding: 6px 8px 5px;
       background: rgba(247,245,240,.7);
@@ -399,8 +407,8 @@
       <span>2026-06-14 · 周日 · 19:24</span>
       <span>本周（6/15 – 6/19）</span>
     </div>
-    <h1>五家都是线下，节奏排得挺密</h1>
-    <p>下周一整天在宁德洲际，下周二下午去福州赛威运动，下周三早上还有福建普创——三场都是对需求、写 agents 和 skills。此外还有香橼橙黄、众前友美两家已对完需求，等你安排回访实施时间。空档尽量留给整理和准备。</p>
+    <h1>三家排满工作日，周四周五留缓冲</h1>
+    <p>下周一整天（08:30–18:00）在宁德洲际，下周二下午（14:00–18:00）去福州赛威运动，下周三早上（08:30–10:00）福建普创——三场都是对需求、写 agents 和 skills，均落在工作时间 8:30–12:00 / 14:00–18:00 区间内。香橼橙黄、众前友美两家待排。周四周五整段空出来做整合交付。</p>
     <div class="stats">
       <div class="stat">
         <div class="v">3</div>
@@ -423,11 +431,8 @@
 
   <h2><span class="sec-num">01</span>这周日历全景</h2>
   <div class="week-grid">
-    <!-- 表头：5 天 -->
+    <!-- 表头：5 个工作日（周一–周五） -->
     <div class="time-col"><div class="day-head-c" style="background:transparent;border-bottom:1px solid var(--line);"></div></div>
-    <div class="day-col-c today">
-      <div class="day-head-c"><span class="name">周日</span><span class="date">06/14</span></div>
-    </div>
     <div class="day-col-c">
       <div class="day-head-c"><span class="name">周一</span><span class="date">06/15</span></div>
     </div>
@@ -440,24 +445,45 @@
     <div class="day-col-c">
       <div class="day-head-c"><span class="name">周四</span><span class="date">06/18</span></div>
     </div>
+    <div class="day-col-c">
+      <div class="day-head-c"><span class="name">周五</span><span class="date">06/19</span></div>
+    </div>
 
-    <!-- 时间格：7–22 点，每行 28px，每小时=28px -->
-    <!-- 7 -->
-    <div class="time-col"><div class="time-cell">07:00</div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
+    <!-- 时间格：只显示 8:30–12 + 14–18 段时间；每行 36px = 1h；事件块按 (start-8.5)*36 算 top -->
+
+    <!-- 8:30（事件块挂这里） -->
+    <div class="time-col"><div class="time-cell">08:30</div></div>
     <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev morning" style="top:0; height:56px;">
-        <div class="t">07 – 09</div>
+      <div class="ev allday" style="top:0; height:126px;">
+        <div class="t">08:30 – 12:00</div>
+        <div class="n">宁德洲际贸易</div>
+        <div class="s" style="font-size:9.5px;color:var(--muted);">线下 · 对需求</div>
+      </div>
+    </div></div>
+    <div class="day-col-c"><div class="day-cell" style="position:relative;">
+      <div class="ev soft" style="top:0; height:126px;">
+        <div class="t">上午 · 自由</div>
+        <div class="s" style="font-size:9.5px;color:var(--muted);">（赛威预热）</div>
+      </div>
+    </div></div>
+    <div class="day-col-c"><div class="day-cell" style="position:relative;">
+      <div class="ev morning" style="top:0; height:54px;">
+        <div class="t">08:30 – 10:00</div>
         <div class="n">福建普创</div>
         <div class="s" style="font-size:9.5px;color:var(--muted);">线下 · 对需求</div>
       </div>
     </div></div>
+    <div class="day-col-c"><div class="day-cell" style="position:relative;">
+      <div class="ev busy" style="top:0; height:126px;">
+        <div class="t">08:30 – 12:00</div>
+        <div class="n">整理三家交付</div>
+        <div class="s" style="font-size:9.5px;color:var(--muted);">agents + skills 草稿</div>
+      </div>
+    </div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
-    <!-- 8 -->
-    <div class="time-col"><div class="time-cell">08:00</div></div>
+    <!-- 8:30 行的其他 5 列 + 9/10/11/12 + 午休 + 14/15/16/17/18 = 11 行 -->
+    <div class="time-col"><div class="time-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -467,32 +493,12 @@
     <!-- 9 -->
     <div class="time-col"><div class="time-cell">09:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev allday" style="top: -28px; height: 12*28px;">
-        <div class="t">ALL DAY</div>
-        <div class="n">宁德洲际贸易</div>
-        <div class="s" style="font-size:9.5px;color:var(--muted);">线下 · 对需求 · agents + skills</div>
-      </div>
-    </div></div>
-    <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev soft" style="top:-28px; height:6*28px;">
-        <div>上午 · 自由安排（赛威预热）</div>
-      </div>
-    </div></div>
-    <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev soft" style="top:0; height:5*28px;">
-        <div>下午 · 缓冲 / 整理</div>
-      </div>
-    </div></div>
-    <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev busy" style="top:0; height:8*28px;">
-        <div class="t">ALL DAY</div>
-        <div class="n">整理三家交付</div>
-        <div class="s" style="font-size:9.5px;color:var(--muted);">agents + skills 草稿</div>
-      </div>
-    </div></div>
+    <div class="day-col-c"><div class="day-cell"></div></div>
+    <div class="day-col-c"><div class="day-cell"></div></div>
+    <div class="day-col-c"><div class="day-cell"></div></div>
+    <div class="day-col-c"><div class="day-cell"></div></div>
 
-    <!-- 10-12 占位（事件已 absolute 跨过） -->
+    <!-- 10 -->
     <div class="time-col"><div class="time-cell">10:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -500,6 +506,7 @@
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
+    <!-- 11 -->
     <div class="time-col"><div class="time-cell">11:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -507,6 +514,7 @@
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
+    <!-- 12 -->
     <div class="time-col"><div class="time-cell">12:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -514,26 +522,45 @@
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
-    <div class="time-col"><div class="time-cell">13:00</div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
+    <!-- 午休分隔条 -->
+    <div class="time-col" style="height:22px;border-right:1px solid var(--line);"><div style="height:22px;"></div></div>
+    <div class="day-col-c"><div class="day-cell lunch"><div class="lunch-label">— 午休 / 非工作时间 —</div></div></div>
+    <div class="day-col-c"><div class="day-cell lunch"><div class="lunch-label">— 午休 / 非工作时间 —</div></div></div>
+    <div class="day-col-c"><div class="day-cell lunch"><div class="lunch-label">— 午休 / 非工作时间 —</div></div></div>
+    <div class="day-col-c"><div class="day-cell lunch"><div class="lunch-label">— 午休 / 非工作时间 —</div></div></div>
+    <div class="day-col-c"><div class="day-cell lunch"><div class="lunch-label">— 午休 / 非工作时间 —</div></div></div>
+
+    <!-- 14：赛威下午挂这里 + 周一/周四下午挂这里 + 周三缓冲 -->
+    <div class="time-col"><div class="time-cell">14:00</div></div>
     <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev afternoon" style="top:0; height:5*28px;">
-        <div class="t">13 – 18</div>
+      <div class="ev allday" style="top:0; height:144px;">
+        <div class="t">14:00 – 18:00</div>
+        <div class="n">宁德洲际贸易</div>
+        <div class="s" style="font-size:9.5px;color:var(--muted);">线下 · 对需求</div>
+      </div>
+    </div></div>
+    <div class="day-col-c"><div class="day-cell" style="position:relative;">
+      <div class="ev afternoon" style="top:0; height:144px;">
+        <div class="t">14:00 – 18:00</div>
         <div class="n">福州赛威运动</div>
         <div class="s" style="font-size:9.5px;color:var(--muted);">线下 · 对需求 · agents + skills</div>
       </div>
     </div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
+    <div class="day-col-c"><div class="day-cell" style="position:relative;">
+      <div class="ev soft" style="top:0; height:144px;">
+        <div class="t">下午 · 缓冲 / 整理</div>
+      </div>
+    </div></div>
+    <div class="day-col-c"><div class="day-cell" style="position:relative;">
+      <div class="ev busy" style="top:0; height:144px;">
+        <div class="t">14:00 – 18:00</div>
+        <div class="n">整理三家交付</div>
+        <div class="s" style="font-size:9.5px;color:var(--muted);">agents + skills 草稿</div>
+      </div>
+    </div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
-    <div class="time-col"><div class="time-cell">14:00</div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-
+    <!-- 15 -->
     <div class="time-col"><div class="time-cell">15:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -541,6 +568,7 @@
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
+    <!-- 16 -->
     <div class="time-col"><div class="time-cell">16:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -548,6 +576,7 @@
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
+    <!-- 17 -->
     <div class="time-col"><div class="time-cell">17:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -555,41 +584,8 @@
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
 
+    <!-- 18 -->
     <div class="time-col"><div class="time-cell">18:00</div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev soft" style="top:0; height:2*28px;">
-        <div>晚间 · 整理材料</div>
-      </div>
-    </div></div>
-    <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev soft" style="top:0; height:2*28px;">
-        <div>晚间 · 自由</div>
-      </div>
-    </div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-
-    <div class="time-col"><div class="time-cell">19:00</div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-
-    <!-- 周日备注：用 19 点行叠加 -->
-    <div class="time-col"><div class="time-cell">20:00</div></div>
-    <div class="day-col-c"><div class="day-cell" style="position:relative;">
-      <div class="ev soft" style="top:-56px; height:2*28px;">
-        <div>晚间 · 准备周一宁德材料</div>
-      </div>
-    </div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-    <div class="day-col-c"><div class="day-cell"></div></div>
-
-    <div class="time-col"><div class="time-cell">21:00</div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
     <div class="day-col-c"><div class="day-cell"></div></div>
@@ -597,9 +593,9 @@
     <div class="day-col-c"><div class="day-cell"></div></div>
   </div>
   <div style="margin-top:6px; font-size:10.5px; color:var(--muted); display:flex; gap:14px; flex-wrap:wrap;">
-    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(47,111,94,.4);vertical-align:middle;margin-right:4px;"></span>整天 / 上午</span>
-    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(201,123,63,.4);vertical-align:middle;margin-right:4px;"></span>下午</span>
-    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(176,99,103,.4);vertical-align:middle;margin-right:4px;"></span>早上</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(47,111,94,.4);vertical-align:middle;margin-right:4px;"></span>客户拜访（上午 / 全天）</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(201,123,63,.4);vertical-align:middle;margin-right:4px;"></span>客户拜访（下午）</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(176,99,103,.4);vertical-align:middle;margin-right:4px;"></span>客户拜访（早上）</span>
     <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:repeating-linear-gradient(45deg,transparent,transparent 2px,var(--line) 2px,var(--line) 4px);vertical-align:middle;margin-right:4px;border:1px solid var(--line);"></span>软安排 / 整理</span>
   </div>
 
@@ -626,7 +622,7 @@
     <div class="step step-1">
       <div class="step-icon">1</div>
       <div class="step-content">
-        <div class="when">MON 06/15 · 整天</div>
+        <div class="when">MON 06/15 · 08:30–18:00</div>
         <div class="what">宁德洲际贸易有限公司<span class="where">宁德 · 客户现场</span></div>
         <span class="tag">agents + skills · 对需求</span>
       </div>
@@ -634,7 +630,7 @@
     <div class="step step-2">
       <div class="step-icon">2</div>
       <div class="step-content">
-        <div class="when">TUE 06/16 · 下午</div>
+        <div class="when">TUE 06/16 · 14:00–18:00</div>
         <div class="what">福州赛威运动科技有限公司<span class="where">福州 · 客户现场</span></div>
         <span class="tag">agents + skills · 对需求</span>
       </div>
@@ -642,7 +638,7 @@
     <div class="step step-3">
       <div class="step-icon">3</div>
       <div class="step-content">
-        <div class="when">WED 06/17 · 早上</div>
+        <div class="when">WED 06/17 · 08:30–10:00</div>
         <div class="what">福建普创信息科技<span class="where">福州 · 客户现场</span></div>
         <span class="tag">agents + skills · 对需求</span>
       </div>
@@ -651,9 +647,10 @@
 
   <h2><span class="sec-num">04</span>我的几个观察</h2>
   <div class="tips">
-    <div class="tip"><strong>周二上午是金矿。</strong>赛威在下午，上午可以拿来做赛威的预热材料，或者给宁德洲际整场出东西。周三早上普创结束后，下午整段空出来——三家交付的整合窗口。</div>
-    <div class="tip"><strong>五家都是线下，意味着交通时间也要算进去。</strong>宁德在宁德市区，福州三家在福州——下周一去宁德要预留车程，回福州后周二才能衔接赛威。香橼橙黄和众前友美等排好后，建议别和这几家背靠背，留点通勤余量。</div>
-    <div class="tip"><strong>周四 6/18 没排东西——</strong>建议把这一天留作"交付日"，把前三天收来的需求统一出 agents 和 skills 草稿。</div>
+    <div class="tip"><strong>周二上午是金矿。</strong>赛威下午 14:00 才到，上午 8:30–12:00 这 3.5h 可以拿来做赛威的预热材料，或者给宁德洲际整场出东西——午饭前能交付一版。</div>
+    <div class="tip"><strong>周三普创 1.5h 偏短。</strong>只占 08:30–10:00 两小时，但下午 14:00–18:00 整段空出来——三家交付的整合窗口正好用上。</div>
+    <div class="tip"><strong>五家都是线下，交通时间不能忘。</strong>宁德在宁德市区，福州三家在福州——下周一去宁德要预留车程，回福州后周二才能衔接赛威。香橼橙黄和众前友美等排好后，建议别和这几家背靠背，留点通勤余量。</div>
+    <div class="tip"><strong>周四周五整段空——</strong>建议把这两天留作"交付日"，把前三天收来的需求统一出 agents 和 skills 草稿、装机验证、文档收口。</div>
   </div>
 
 </div>
